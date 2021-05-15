@@ -1,0 +1,29 @@
+void menu(void)
+{   int choice;
+    system("cls");
+    system("color 9");
+    printf("\n\n\t\t\tCHECKLIST MANAGEMENT PROGRAM");
+    printf("\n\n\n\t\t\xB2\xB2\xB2\xB2\xB2\xB2\xB2 \xB2 \xB2 MAIN MENU \xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+    printf("\n\n\t\t1.Create checklist\n\t\t2.Update information of checklist\n\t\t3.Check the details of checklist\n\t\t4.Remove Checklist\n\t\t5.View all checklist\n\t\t6.Exit Program\n\t\t\n\n\n\t\t Enter your choice:");
+    scanf("%d",&choice);
+
+    system("cls");
+    switch(choice)
+    {
+        case 1:new_acc();
+        break;
+        case 2:edit();
+        break;
+        case 3:see();
+        break;
+        case 4:erase();
+        break;
+        case 5:view_list();
+        break;
+        case 6:close();
+        break;
+    }
+
+
+
+}
