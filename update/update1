@@ -12,8 +12,8 @@ struct {
 
     char name[60];
     int acc_no,age;
-    char address[60];
-    char citizenship[15];
+    char address[200];
+    char citizenship[60];
     double phone;
     char acc_type[10];
     float amt;
@@ -46,10 +46,10 @@ void new_acc()
     account_no:
     system("cls");
     printf("\t\t\t\xB2\xB2\xB2\ ADD Checklist  \xB2\xB2\xB2\xB2");
-    printf("\n\n\nEnter Due date(dd/mm/yyyy):");
-    scanf("%d/%d/%d",&add.dob.day,&add.dob.month,&add.dob.year);
     printf("\nEnter the checklist number:");
     scanf("%d",&check.acc_no);
+    printf("\n\n\nEnter Due date(dd/mm/yyyy):");
+    scanf("%d/%d/%d",&add.dob.day,&add.dob.month,&add.dob.year);
     while(fscanf(ptr,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",&add.acc_no,add.name,&add.dob.month,&add.dob.day,&add.dob.year,&add.age,add.address,add.citizenship,&add.phone,add.acc_type,&add.amt,&add.deposit.month,&add.deposit.day,&add.deposit.year)!=EOF)
     {
         if (check.acc_no==add.acc_no)
@@ -64,6 +64,8 @@ void new_acc()
     scanf("%s",add.name);
     printf("\nEnter the information:");
     scanf("%s",add.address);
+    printf("\nEnter the Status:");
+    scanf("%s",add.citizenship);
     printf("\nType of account:\n\t1:#Homework\n\t2:#Assignment\n\t3:#Project\n\t4:#Hobby\n\n\n\tEnter your choice:");
     scanf("%s",add.acc_type);
 
@@ -92,11 +94,11 @@ void view_list()
     view=fopen("record.dat","r");
     int test=0;
     system("cls");
-    printf("\nACC. NO.\tNAME\t\t\tADDRESS\t\t\tDue Date\n");
+    printf("\nACC. NO.\tSubject Name\t\t\tStatus\t\t\tDue Date\n");
 
     while(fscanf(view,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d",&add.acc_no,add.name,&add.dob.month,&add.dob.day,&add.dob.year,&add.age,add.address,add.citizenship,&add.phone,add.acc_type,&add.amt,&add.deposit.month,&add.deposit.day,&add.deposit.year)!=EOF)
        {
-           printf("\n%6d\t %10s\t\t\t%10s\t\t%d/%d/%d",add.acc_no,add.name,add.address,add.dob.day,add.dob.month,add.dob.year);
+           printf("\n%6d\t %10s\t\t\t%10s\t\t%d/%d/%d",add.acc_no,add.name,add.citizenship,add.dob.day,add.dob.month,add.dob.year);
            test++;
        }
 
@@ -132,11 +134,11 @@ void edit(void)
     {
         if (add.acc_no==upd.acc_no)
         {   test=1;
-            printf("\nWhich information do you want to change?\n1.Address\n2.Phone\n\nEnter your choice(1 for address and 2 for phone):");
+            printf("\nWhich information do you want to change?\n1.Information\n2.Status\n3.Due Date\n\nEnter your choice(1 for Information, 2 for Status and 3 for Due Date):");
             scanf("%d",&choice);
             system("cls");
             if(choice==1)
-                {printf("Enter the new address:");
+                {printf("Enter the new Information:");
                 scanf("%s",upd.address);
                 fprintf(newrec,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.acc_no,add.name,add.dob.month,add.dob.day,add.dob.year,add.age,upd.address,add.citizenship,add.phone,add.acc_type,add.amt,add.deposit.month,add.deposit.day,add.deposit.year);
                 system("cls");
@@ -144,12 +146,22 @@ void edit(void)
                 }
             else if(choice==2)
                 {
-                    printf("Enter the new phone number:");
-                scanf("%lf",&upd.phone);
-                fprintf(newrec,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.acc_no,add.name,add.dob.month,add.dob.day,add.dob.year,add.age,add.address,add.citizenship,upd.phone,add.acc_type,add.amt,add.deposit.month,add.deposit.day,add.deposit.year);
+                    printf("Enter the new status:");
+                scanf("%s",upd.citizenship);
+                fprintf(newrec,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.acc_no,add.name,add.dob.month,add.dob.day,add.dob.year,add.age,add.address,upd.citizenship,add.phone,add.acc_type,add.amt,add.deposit.month,add.deposit.day,add.deposit.year);
                 system("cls");
                 printf("Changes saved!");
                 }
+            else if(choice==3)
+                {
+                    printf("Enter the new due date:");
+                scanf("%d/%d/%d",&upd.dob.day,&upd.dob.month,&upd.dob.year);
+                fprintf(newrec,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n",add.acc_no,add.name,upd
+                        .dob.month,upd.dob.day,upd.dob.year,add.age,add.address,add.citizenship,add.phone,add.acc_type,add.amt,add.deposit.month,add.deposit.day,add.deposit.year);
+                system("cls");
+                printf("Changes saved!");
+                }
+
 
         }
         else
@@ -342,22 +354,20 @@ void see(void)
             {   system("cls");
                 test=1;
 
-                printf("\nChecklist NO.:%d\nSubject name:%s \nDue Date:%d/%d/%d \nInformation:%s \nType Of Account:%s\n\n",add.acc_no,add.name,add.dob.month,add.dob.day,add.dob.year,add.address,
-                add.acc_type,add.amt);
+                printf("\nChecklist NO.:%d\nSubject name:%s \nDue Date:%d/%d/%d \nInformation:%s \nStatus:%s\n\n",add.acc_no,add.name,add.dob.month,add.dob.day,add.dob.year,add.address,add.citizenship);
 
             }
         }
     }
     else if (choice==2)
-    {   printf("Enter the name:");
+    {   printf("Enter the Subject name:");
         scanf("%s",&check.name);
         while (fscanf(ptr,"%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d",&add.acc_no,add.name,&add.dob.month,&add.dob.day,&add.dob.year,&add.age,add.address,add.citizenship,&add.phone,add.acc_type,&add.amt,&add.deposit.month,&add.deposit.day,&add.deposit.year)!=EOF)
         {
             if(strcmpi(add.name,check.name)==0)
             {   system("cls");
                 test=1;
-                printf("\nChecklist NO.:%d\nSubject name:%s \nBegin Date:%d/%d/%d \nInformation:%s \nType Of Account:%s \n\n\n",add.acc_no,add.name,add.dob.month,add.dob.day,add.dob.year,add.address,
-                add.acc_type,add.amt);
+                printf("\nChecklist NO.:%d\nSubject name:%s \nBegin Date:%d/%d/%d \nInformation:%s \nStatus:%s \n\n\n",add.acc_no,add.name,add.dob.month,add.dob.day,add.dob.year,add.address,add.citizenship);
 
             }
         }
